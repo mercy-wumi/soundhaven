@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui"
 import Image from "next/image"
 
-export default function page() {
+export default function Page() {
 
   const {connected, publicKey} = useWallet();
 
