@@ -1,11 +1,7 @@
 "use client";
 
-import { useMemo, useEffect } from "react";
-
 import Image from "next/image";
 import { redirect } from "next/navigation";
-
-import { useSelector } from "react-redux";
 
 import { useWallet } from "@solana/wallet-adapter-react";
 
@@ -14,16 +10,9 @@ import NowPlaying from "../components/NowPlaying";
 import PlaylistCard from "../components/PlaylistCard";
 import { listOfSongs } from "../components/NowPlaying";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
-import { tRootState } from "@/utils/app.types";
-
-import { fetchUserDetails, getProvider } from "@/services/blockchain";
 
 export default function Home() {
-  const { publicKey} = useWallet();
-
-
-
- 
+  const { publicKey } = useWallet();
 
   if (!publicKey) return redirect("/login");
 

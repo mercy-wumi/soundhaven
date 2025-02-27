@@ -1,14 +1,11 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useState } from "react";
 
 import { useWallet } from "@solana/wallet-adapter-react";
 import { redirect } from "next/navigation";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 import Image from "next/image";
-
-import { fetchUserDetails, getProvider, getProviderReadonly } from "@/services/blockchain";
-import { useSelector } from "react-redux";
 import { tRootState, tUser } from "@/utils/app.types";
 import CreateUser from "@/components/CreateUser";
 
@@ -18,15 +15,6 @@ export default function Page() {
   const [user, setUser] = useState<tUser | null>(null);
 
   const [createUser, setCreateUser] = useState(false);
-
-  const program = useMemo(() => getProviderReadonly(), []);
-
-  useEffect(() => {
-    if (publicKey)
-      fetchUserDetails(program!)
-        .then((data) => setUser(data))
-        .catch((err) => console.log(err));
-  }, [program, publicKey]);
 
 
   if (user) return redirect("/");
