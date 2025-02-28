@@ -1,5 +1,7 @@
 "use client";
 
+import { useSelector, useDispatch } from "react-redux";
+
 import Image from "next/image";
 import { redirect } from "next/navigation";
 
@@ -10,11 +12,21 @@ import NowPlaying from "../components/NowPlaying";
 import PlaylistCard from "../components/PlaylistCard";
 import { listOfSongs } from "../components/NowPlaying";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
+import { tRootState } from "@/store";
+import { useEffect } from "react";
+import { resetUserInfo } from "@/store/reducers/appReducer";
 
 export default function Home() {
   const { publicKey } = useWallet();
+  const dispatch = useDispatch();
 
-  if (!publicKey) return redirect("/login");
+  const userInfo = useSelector((state: tRootState) => state.app.user);
+
+  // useEffect(() => {
+  //   dispatch(resetUserInfo());
+  // }, [publicKey]);
+
+  if (!userInfo || !publicKey) return redirect("/login");
 
   return (
     <div className="h-screen flex w-[1440px] mx-auto">
@@ -28,7 +40,7 @@ export default function Home() {
             <input
               type="text"
               placeholder="Search"
-              className="outline-none bg-transparent "
+              className="outline-none bg-transparent"
             />
           </div>
           <div className="flex gap-4 items-center">
@@ -36,11 +48,11 @@ export default function Home() {
               .toBase58()
               .substring(0, 7)}...`}</WalletMultiButton>
             <Image
-              src="/avatar.svg"
+              src={userInfo?.profileImg}
               width={50}
               height={50}
               alt="profile"
-              className="rounded-full"
+              className="rounded-full bg-white p-1"
             />
           </div>
         </div>

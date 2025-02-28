@@ -1,23 +1,38 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useWallet } from "@solana/wallet-adapter-react";
 import { redirect } from "next/navigation";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 import Image from "next/image";
-import { tRootState, tUser } from "@/utils/app.types";
 import CreateUser from "@/components/CreateUser";
+import { useSelector, useDispatch } from "react-redux";
+import { tRootState } from "@/store";
+import { fetchUser } from "@/anchor/setup";
+import { updateUserInfo } from "@/store/reducers/appReducer";
 
 export default function Page() {
   const { publicKey } = useWallet();
+  const dispatch = useDispatch();
 
-  const [user, setUser] = useState<tUser | null>(null);
+  const userInfo = useSelector((state: tRootState) => state.app.user);
 
   const [createUser, setCreateUser] = useState(false);
 
+  if (userInfo) return redirect("/");
 
-  if (user) return redirect("/");
+  const fetchUserInfo = async () => {
+    if (publicKey) {
+      const user = await fetchUser(publicKey);
+
+      dispatch(updateUserInfo(user));
+    }
+  };
+
+  useEffect(() => {
+    fetchUserInfo();
+  }, [publicKey]);
 
   return (
     <div className="flex">
@@ -38,7 +53,7 @@ export default function Page() {
           </div>
         ) : (
           publicKey &&
-          !user && (
+          !userInfo && (
             <div className="flex flex-col justify-center gap-3 items-center mx-auto w-1/2 text-white">
               <p className="mb-8 font-semibold">Get Started!</p>
               <p className="font-bold text-6xl">SoundHaven</p>

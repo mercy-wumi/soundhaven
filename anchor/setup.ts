@@ -32,3 +32,14 @@ export const createUser = async (
 
   return Ix;
 };
+
+export const fetchUser = async (user: PublicKey) => {
+  const [userPda] = web3.PublicKey.findProgramAddressSync(
+    [Buffer.from("user"), user.toBuffer()],
+    program.programId
+  );
+
+  const userDetails = await program.account.user.fetch(userPda);
+
+  return userDetails;
+};

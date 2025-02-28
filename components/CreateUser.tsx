@@ -1,14 +1,18 @@
 "use client";
 
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 
 import { useWallet } from "@solana/wallet-adapter-react";
 import { redirect } from "next/navigation";
-import { connection, createUser } from "@/anchor/setup";
+import { connection, createUser, fetchUser } from "@/anchor/setup";
 import { Transaction } from "@solana/web3.js";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
+import { updateUserInfo } from "@/store/reducers/appReducer";
 
 export default function CreateUser() {
+  const dispatch = useDispatch();
+
   const { publicKey, sendTransaction } = useWallet();
 
   if (!publicKey) return redirect("/login");
@@ -43,6 +47,11 @@ export default function CreateUser() {
 
       if (!confirmation.value.err) {
         console.log("user created successfully");
+
+        const user = await fetchUser(publicKey);
+
+        dispatch(updateUserInfo(user));
+
         return;
       }
 
@@ -51,6 +60,12 @@ export default function CreateUser() {
       console.log((err as Error).message);
     } finally {
       setLoading(false);
+      setUserDetails({
+        name: "",
+        img: "",
+        bio: "",
+        isArtist: "",
+      });
     }
   };
 

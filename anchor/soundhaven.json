@@ -1,249 +1,285 @@
 {
-    "address": "EDiN6Pvh3zDU7nNtvwsctwAnsnP4Cc8hYxnHjuPwQGxG",
-    "metadata": {
-      "name": "soundhaven",
-      "version": "0.1.0",
-      "spec": "0.1.0",
-      "description": "Created with Anchor"
+  "address": "EDiN6Pvh3zDU7nNtvwsctwAnsnP4Cc8hYxnHjuPwQGxG",
+  "metadata": {
+    "name": "soundhaven",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Created with Anchor"
+  },
+  "instructions": [
+    {
+      "name": "accept_payment",
+      "discriminator": [16, 43, 253, 85, 86, 15, 24, 181],
+      "accounts": [
+        {
+          "name": "payment",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [112, 97, 121, 101, 114]
+              },
+              {
+                "kind": "account",
+                "path": "signer"
+              }
+            ]
+          }
+        },
+        {
+          "name": "receiver",
+          "writable": true
+        },
+        {
+          "name": "signer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program"
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "clock",
+          "address": "SysvarC1ock11111111111111111111111111111111"
+        }
+      ],
+      "args": []
     },
-    "instructions": [
-      {
-        "name": "accept_payment",
-        "discriminator": [
-          16,
-          43,
-          253,
-          85,
-          86,
-          15,
-          24,
-          181
-        ],
-        "accounts": [
-          {
-            "name": "payment",
-            "writable": true,
-            "pda": {
-              "seeds": [
-                {
-                  "kind": "const",
-                  "value": [
-                    112,
-                    97,
-                    121,
-                    101,
-                    114
-                  ]
-                },
-                {
-                  "kind": "account",
-                  "path": "signer"
-                }
-              ]
-            }
-          },
-          {
-            "name": "receiver",
-            "writable": true
-          },
-          {
-            "name": "signer",
-            "writable": true,
-            "signer": true
-          },
-          {
-            "name": "system_program"
-          },
-          {
-            "name": "token_program",
-            "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
-          },
-          {
-            "name": "clock",
-            "address": "SysvarC1ock11111111111111111111111111111111"
+    {
+      "name": "create_song",
+      "discriminator": [127, 207, 208, 177, 26, 61, 248, 164],
+      "accounts": [
+        {
+          "name": "song",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [115, 111, 110, 103]
+              },
+              {
+                "kind": "account",
+                "path": "signer"
+              }
+            ]
           }
-        ],
-        "args": []
-      },
-      {
-        "name": "create_song",
-        "discriminator": [
-          127,
-          207,
-          208,
-          177,
-          26,
-          61,
-          248,
-          164
-        ],
-        "accounts": [
-          {
-            "name": "song",
-            "writable": true,
-            "pda": {
-              "seeds": [
-                {
-                  "kind": "const",
-                  "value": [
-                    115,
-                    111,
-                    110,
-                    103
-                  ]
-                },
-                {
-                  "kind": "account",
-                  "path": "signer"
-                }
-              ]
-            }
-          },
-          {
-            "name": "user",
-            "writable": true,
-            "pda": {
-              "seeds": [
-                {
-                  "kind": "const",
-                  "value": [
-                    117,
-                    115,
-                    101,
-                    114
-                  ]
-                },
-                {
-                  "kind": "account",
-                  "path": "signer"
-                }
-              ]
-            }
-          },
-          {
-            "name": "signer",
-            "writable": true,
-            "signer": true
-          },
-          {
-            "name": "system_program",
-            "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "user",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [117, 115, 101, 114]
+              },
+              {
+                "kind": "account",
+                "path": "signer"
+              }
+            ]
           }
-        ],
-        "args": [
+        },
+        {
+          "name": "signer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "song_name",
+          "type": "string"
+        },
+        {
+          "name": "song_url",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "delete_song",
+      "discriminator": [146, 88, 254, 164, 193, 81, 122, 206],
+      "accounts": [
+        {
+          "name": "song",
+          "writable": true
+        },
+        {
+          "name": "signer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "delete_user",
+      "discriminator": [186, 85, 17, 249, 219, 231, 98, 251],
+      "accounts": [
+        {
+          "name": "user",
+          "writable": true
+        },
+        {
+          "name": "signer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "initialize_user",
+      "discriminator": [111, 17, 185, 250, 60, 122, 38, 254],
+      "accounts": [
+        {
+          "name": "user",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [117, 115, 101, 114]
+              },
+              {
+                "kind": "account",
+                "path": "signer"
+              }
+            ]
+          }
+        },
+        {
+          "name": "signer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "profile_img",
+          "type": "string"
+        },
+        {
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "name": "is_artist",
+          "type": "bool"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "Payment",
+      "discriminator": [227, 231, 51, 26, 244, 88, 4, 148]
+    },
+    {
+      "name": "Song",
+      "discriminator": [144, 84, 211, 50, 100, 5, 81, 24]
+    },
+    {
+      "name": "User",
+      "discriminator": [159, 117, 95, 227, 239, 151, 58, 236]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "NameTooLong",
+      "msg": "Name too long - max length of 50 characters"
+    },
+    {
+      "code": 6001,
+      "name": "ProfileImgUrlTooLong",
+      "msg": "Profile image url link is too long"
+    },
+    {
+      "code": 6002,
+      "name": "DescriptionTooLong",
+      "msg": "Description is too long - max length of 200 characters"
+    },
+    {
+      "code": 6003,
+      "name": "SongTitleTooLong",
+      "msg": "Song title is too long - max length of 50 characters"
+    },
+    {
+      "code": 6004,
+      "name": "SongUrlTooLong",
+      "msg": "Song url is too long - max length of 200 characters"
+    }
+  ],
+  "types": [
+    {
+      "name": "Payment",
+      "type": {
+        "kind": "struct",
+        "fields": [
           {
-            "name": "song_name",
+            "name": "wallet",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Song",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "song_title",
             "type": "string"
           },
           {
             "name": "song_url",
             "type": "string"
+          },
+          {
+            "name": "song_owner",
+            "type": "pubkey"
           }
         ]
-      },
-      {
-        "name": "delete_song",
-        "discriminator": [
-          146,
-          88,
-          254,
-          164,
-          193,
-          81,
-          122,
-          206
-        ],
-        "accounts": [
+      }
+    },
+    {
+      "name": "User",
+      "type": {
+        "kind": "struct",
+        "fields": [
           {
-            "name": "song",
-            "writable": true
+            "name": "owner",
+            "type": "pubkey"
           },
-          {
-            "name": "signer",
-            "writable": true,
-            "signer": true
-          },
-          {
-            "name": "system_program",
-            "address": "11111111111111111111111111111111"
-          }
-        ],
-        "args": []
-      },
-      {
-        "name": "delete_user",
-        "discriminator": [
-          186,
-          85,
-          17,
-          249,
-          219,
-          231,
-          98,
-          251
-        ],
-        "accounts": [
-          {
-            "name": "user",
-            "writable": true
-          },
-          {
-            "name": "signer",
-            "writable": true,
-            "signer": true
-          },
-          {
-            "name": "system_program",
-            "address": "11111111111111111111111111111111"
-          }
-        ],
-        "args": []
-      },
-      {
-        "name": "initialize_user",
-        "discriminator": [
-          111,
-          17,
-          185,
-          250,
-          60,
-          122,
-          38,
-          254
-        ],
-        "accounts": [
-          {
-            "name": "user",
-            "writable": true,
-            "pda": {
-              "seeds": [
-                {
-                  "kind": "const",
-                  "value": [
-                    117,
-                    115,
-                    101,
-                    114
-                  ]
-                },
-                {
-                  "kind": "account",
-                  "path": "signer"
-                }
-              ]
-            }
-          },
-          {
-            "name": "signer",
-            "writable": true,
-            "signer": true
-          },
-          {
-            "name": "system_program",
-            "address": "11111111111111111111111111111111"
-          }
-        ],
-        "args": [
           {
             "name": "name",
             "type": "string"
@@ -259,150 +295,21 @@
           {
             "name": "is_artist",
             "type": "bool"
+          },
+          {
+            "name": "has_paid",
+            "type": "bool"
+          },
+          {
+            "name": "song_count",
+            "type": "u8"
+          },
+          {
+            "name": "likes",
+            "type": "u64"
           }
         ]
       }
-    ],
-    "accounts": [
-      {
-        "name": "Payment",
-        "discriminator": [
-          227,
-          231,
-          51,
-          26,
-          244,
-          88,
-          4,
-          148
-        ]
-      },
-      {
-        "name": "Song",
-        "discriminator": [
-          144,
-          84,
-          211,
-          50,
-          100,
-          5,
-          81,
-          24
-        ]
-      },
-      {
-        "name": "User",
-        "discriminator": [
-          159,
-          117,
-          95,
-          227,
-          239,
-          151,
-          58,
-          236
-        ]
-      }
-    ],
-    "errors": [
-      {
-        "code": 6000,
-        "name": "NameTooLong",
-        "msg": "Name too long - max length of 50 characters"
-      },
-      {
-        "code": 6001,
-        "name": "ProfileImgUrlTooLong",
-        "msg": "Profile image url link is too long"
-      },
-      {
-        "code": 6002,
-        "name": "DescriptionTooLong",
-        "msg": "Description is too long - max length of 200 characters"
-      },
-      {
-        "code": 6003,
-        "name": "SongTitleTooLong",
-        "msg": "Song title is too long - max length of 50 characters"
-      },
-      {
-        "code": 6004,
-        "name": "SongUrlTooLong",
-        "msg": "Song url is too long - max length of 200 characters"
-      }
-    ],
-    "types": [
-      {
-        "name": "Payment",
-        "type": {
-          "kind": "struct",
-          "fields": [
-            {
-              "name": "wallet",
-              "type": "pubkey"
-            }
-          ]
-        }
-      },
-      {
-        "name": "Song",
-        "type": {
-          "kind": "struct",
-          "fields": [
-            {
-              "name": "song_title",
-              "type": "string"
-            },
-            {
-              "name": "song_url",
-              "type": "string"
-            },
-            {
-              "name": "song_owner",
-              "type": "pubkey"
-            }
-          ]
-        }
-      },
-      {
-        "name": "User",
-        "type": {
-          "kind": "struct",
-          "fields": [
-            {
-              "name": "owner",
-              "type": "pubkey"
-            },
-            {
-              "name": "name",
-              "type": "string"
-            },
-            {
-              "name": "profile_img",
-              "type": "string"
-            },
-            {
-              "name": "description",
-              "type": "string"
-            },
-            {
-              "name": "is_artist",
-              "type": "bool"
-            },
-            {
-              "name": "has_paid",
-              "type": "bool"
-            },
-            {
-              "name": "song_count",
-              "type": "u8"
-            },
-            {
-              "name": "likes",
-              "type": "u64"
-            }
-          ]
-        }
-      }
-    ]
-  }
+    }
+  ]
+}
