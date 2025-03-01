@@ -43,3 +43,42 @@ export const fetchUser = async (user: PublicKey) => {
 
   return userDetails;
 };
+
+export const createSong = async (
+  user: PublicKey,
+  songTitle: string,
+  songUrl: string
+) => {
+  const [songPda] = web3.PublicKey.findProgramAddressSync(
+    [Buffer.from("song"), user.toBuffer()],
+    program.programId
+  );
+  const [userPda] = web3.PublicKey.findProgramAddressSync(
+    [Buffer.from("user"), user.toBuffer()],
+    program.programId
+  );
+
+  const Ix = await program.methods
+    .createSong(songTitle, songUrl)
+    .accountsPartial({
+      song: songPda,
+      user: userPda,
+      signer: user,
+      systemProgram: web3.SystemProgram.programId,
+    })
+    .instruction();
+
+  return Ix;
+};
+
+export const fetchAllSongs = async () => {
+  console.log("fetching 1");
+  await program.account.song
+    .all()
+    .then((res) => {
+      return res;
+    })
+    .catch((err) => console.log(err));
+
+  console.log("fetching 2");
+};

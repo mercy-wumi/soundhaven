@@ -55,6 +55,7 @@ export default function Page() {
           publicKey &&
           !userInfo && (
             <div className="flex flex-col justify-center gap-3 items-center mx-auto w-1/2 text-white">
+              <WalletMultiButton />
               <p className="mb-8 font-semibold">Get Started!</p>
               <p className="font-bold text-6xl">SoundHaven</p>
               <span className="text-xl">A safe space for music lovers. </span>

@@ -1,22 +1,24 @@
-import { PublicKey } from "@solana/web3.js"
+import { PublicKey } from "@solana/web3.js";
 
 export type tUser = {
-    owner: PublicKey,
-    name: string,
-    profileImg: string,
-    description: string,
-    isArtist: boolean,
-    hasPaid: boolean,
-    songCount: number,
-    likes: number
-}
+  owner: PublicKey;
+  name: string;
+  profileImg: string;
+  description: string;
+  isArtist: boolean;
+  hasPaid: boolean;
+  songCount: number;
+  likes: number;
+};
 
 export type tSong = {
-    song_title: string,
-    song_url: string,
-    song_owner: string,
-}
+  songTitle: string;
+  songUrl: string;
+  songOwner: PublicKey;
+};
+
+export type tSongs = tSong[];
 
 export type tPayment = {
-    wallet: string
-}
+  wallet: string;
+};
