@@ -4,10 +4,14 @@ import { Entries } from "@/util.types";
 
 type StateKeyType = "app";
 
+const isClient = typeof window !== "undefined";
+
 export const getState = <T extends object>(
   key: StateKeyType,
   InitialState: T
 ): T => {
+  if (!isClient) return InitialState;
+
   const cachedState =
     JSON.parse(localStorage.getItem("appState") || "{}")[key] || {};
 
@@ -23,6 +27,9 @@ export const getState = <T extends object>(
 };
 
 export const saveState = <T>(key: StateKeyType, state: T): void => {
+
+  if (!isClient) return;
+  
   const cachedState = JSON.parse(localStorage.getItem("appState") || "{}");
   cachedState[key] = state;
   localStorage.setItem("appState", JSON.stringify(cachedState));
