@@ -13,10 +13,8 @@ import PlaylistCard from "../components/PlaylistCard";
 import { listOfSongs } from "../components/NowPlaying";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 import { tRootState } from "@/store";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { resetUserInfo } from "@/store/reducers/appReducer";
-import CreateSong from "@/components/CreateSong";
-import { fetchAllSongs } from "@/anchor/setup";
 
 export default function Home() {
   const { publicKey } = useWallet();
@@ -24,31 +22,19 @@ export default function Home() {
 
   const userInfo = useSelector((state: tRootState) => state.app.user);
 
-  const [createSong, setCreateSong] = useState(false);
-
   useEffect(() => {
     if (!publicKey) {
       dispatch(resetUserInfo());
     }
-  }, [publicKey]);
-
-  useEffect(() => {
-    const fetchSongs = async () => {
-      await fetchAllSongs();
-    };
-    const songs = fetchSongs();
-
-    console.log(songs)
-  }, [])
+  }, [publicKey, dispatch]);
 
   if (!userInfo) return redirect("/login");
 
   return (
     <>
-      {createSong && <CreateSong />}
       <div className="h-screen flex w-[1440px] mx-auto">
         <div className="w-[200px]">
-          <Navbar setCreateSong={setCreateSong} />
+          <Navbar />
         </div>
         <div className="w-[100%] py-10 px-6 h-screen overflow-y-scroll relative ">
           <div className="flex justify-between items-center fixed w-[1240px] z-30 mx-auto top-4">

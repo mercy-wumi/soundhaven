@@ -1,13 +1,9 @@
 import { connection, createSong, fetchAllSongs } from "@/anchor/setup";
-import { updateAllSongs } from "@/store/reducers/appReducer";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { Transaction } from "@solana/web3.js";
-import { useEffect, useState } from "react";
-
-import { useDispatch } from "react-redux";
+import { useState } from "react";
 
 export default function CreateSong() {
-  const dispatch = useDispatch();
 
   const [title, setTitle] = useState("");
   const [url, setUrl] = useState("");
@@ -18,8 +14,6 @@ export default function CreateSong() {
 
   const handleCreateSong = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    console.log(title, url);
 
     setLoading(true);
 
@@ -59,6 +53,7 @@ export default function CreateSong() {
     }
   };
   return (
+    <div className="absolute top-0 shadow-black">
     <div className="w-full flex justify-center items-center flex-col gap-2 z-20">
       <form
         onSubmit={handleCreateSong}
@@ -99,6 +94,7 @@ export default function CreateSong() {
           {loading ? "Loading.." : "Create"}
         </button>
       </form>
+    </div>
     </div>
   );
 }

@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
 import { useWallet } from "@solana/wallet-adapter-react";
-import { redirect } from "next/navigation";
 import { connection, createUser, fetchUser } from "@/anchor/setup";
 import { Transaction } from "@solana/web3.js";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
@@ -12,10 +12,15 @@ import { updateUserInfo } from "@/store/reducers/appReducer";
 
 export default function CreateUser() {
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const { publicKey, sendTransaction } = useWallet();
 
-  if (!publicKey) return redirect("/login");
+  useEffect(() => {
+    if (!publicKey) {
+      router.push("/login");
+    }
+  }, [publicKey, router]);
 
   const [loading, setLoading] = useState(false);
 
@@ -33,7 +38,7 @@ export default function CreateUser() {
 
     try {
       const Ix = await createUser(
-        publicKey,
+        publicKey!,
         userdetails.name,
         userdetails.img,
         userdetails.bio,
@@ -48,7 +53,7 @@ export default function CreateUser() {
       if (!confirmation.value.err) {
         console.log("user created successfully");
 
-        const user = await fetchUser(publicKey);
+        const user = await fetchUser(publicKey!);
 
         dispatch(updateUserInfo(user));
 

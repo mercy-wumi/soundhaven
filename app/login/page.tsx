@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from "react";
 
 import { useWallet } from "@solana/wallet-adapter-react";
-import { redirect } from "next/navigation";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 import Image from "next/image";
 import CreateUser from "@/components/CreateUser";
@@ -11,28 +10,32 @@ import { useSelector, useDispatch } from "react-redux";
 import { tRootState } from "@/store";
 import { fetchUser } from "@/anchor/setup";
 import { updateUserInfo } from "@/store/reducers/appReducer";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
   const { publicKey } = useWallet();
+  const router = useRouter();
   const dispatch = useDispatch();
 
   const userInfo = useSelector((state: tRootState) => state.app.user);
 
   const [createUser, setCreateUser] = useState(false);
 
-  if (userInfo) return redirect("/");
-
-  const fetchUserInfo = async () => {
-    if (publicKey) {
-      const user = await fetchUser(publicKey);
-
-      dispatch(updateUserInfo(user));
-    }
-  };
+  if (userInfo) {
+    router.push("/");
+  }
 
   useEffect(() => {
-    fetchUserInfo();
-  }, [publicKey]);
+    const fetchData = async () => {
+      if (publicKey) {
+        const user = await fetchUser(publicKey);
+
+        dispatch(updateUserInfo(user));
+      }
+    };
+
+    fetchData();
+  }, [publicKey, dispatch]);
 
   return (
     <div className="flex">

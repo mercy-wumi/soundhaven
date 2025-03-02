@@ -1,19 +1,15 @@
 "use client";
 
 import { tRootState } from "@/store";
-import { Dispatch, SetStateAction } from "react";
 import { useSelector } from "react-redux";
 
 const style = {
   list: "mb-3 hover:text-lg hover:cursor-pointer",
 };
 
-export default function Navbar({
-  setCreateSong
-}: {
-  setCreateSong: Dispatch<SetStateAction<boolean>>
-}) {
+export default function Navbar() {
   const userInfo = useSelector((state: tRootState) => state.app.user);
+
 
   return (
     <nav className="flex flex-col gap-20 h-screen relative py-10 px-6 rounded-r-3xl bg-black">
@@ -44,7 +40,7 @@ export default function Navbar({
           <li className={style.list}>Artists</li>
           <li className={style.list}>Playlists</li>
           {userInfo?.isArtist && (
-            <button className="px-4 py-2 bg-white rounded-xl text-black w-fit mt-6" onClick={() => setCreateSong(true)}>
+            <button className="px-4 py-2 bg-white rounded-xl text-black w-fit mt-6">
               Create song
             </button>
           )}
