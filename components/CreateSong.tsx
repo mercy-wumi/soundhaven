@@ -1,5 +1,4 @@
 import { connection, createSong, fetchAllSongs } from "@/anchor/setup";
-import { tSongs } from "@/app.types";
 import { useDispatch } from "react-redux";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { Transaction } from "@solana/web3.js";
