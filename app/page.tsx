@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect, useState } from "react";
+
 import { useSelector, useDispatch } from "react-redux";
 
 import Image from "next/image";
@@ -13,8 +15,9 @@ import PlaylistCard from "../components/PlaylistCard";
 import { listOfSongs } from "../components/NowPlaying";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 import { tRootState } from "@/store";
-import { useEffect } from "react";
-import { resetUserInfo } from "@/store/reducers/appReducer";
+import { resetUserInfo, updateAllSongs } from "@/store/reducers/appReducer";
+import CreateSong from "@/components/CreateSong";
+import { fetchAllSongs } from "@/anchor/setup";
 
 export default function Home() {
   const { publicKey } = useWallet();
@@ -22,23 +25,35 @@ export default function Home() {
 
   const userInfo = useSelector((state: tRootState) => state.app.user);
 
+  const [showCreateSong, setShowCreateSong] = useState(false);
+
   useEffect(() => {
     if (!publicKey) {
       dispatch(resetUserInfo());
     }
   }, [publicKey, dispatch]);
 
+  useEffect(() => {
+    if (!publicKey) return;
+    fetchAllSongs()
+      .then((res) => {
+        dispatch(updateAllSongs(res.map((songs) => songs.account)));
+      })
+      .catch((err) => console.log(err));
+  }, [publicKey, dispatch]);
+
   if (!userInfo) return redirect("/login");
 
   return (
     <>
+      {showCreateSong && <CreateSong setShowCreateSong={setShowCreateSong} />}
       <div className="h-screen flex w-[1440px] mx-auto">
         <div className="w-[200px]">
-          <Navbar />
+          <Navbar setShowCreateSong={setShowCreateSong} />
         </div>
         <div className="w-[100%] py-10 px-6 h-screen overflow-y-scroll relative ">
-          <div className="flex justify-between items-center fixed w-[1240px] z-30 mx-auto top-4">
-            <div className="flex border-b-[1px] p-2 gap-2 min-w-[600px] items-center">
+          <div className="flex justify-between items-center fixed w-[1240px] z-30 mx-auto top-0 bg-black py-3 px-6 rounded-xl">
+            <div className="flex border-b-[1px] p-2 gap-2 min-w-[400px] items-center">
               <Image src="/search.svg" width={24} height={24} alt="search" />
               <input
                 type="text"

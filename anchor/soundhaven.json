@@ -1,5 +1,5 @@
 {
-  "address": "EDiN6Pvh3zDU7nNtvwsctwAnsnP4Cc8hYxnHjuPwQGxG",
+  "address": "DKW5QK3EBQy1Mk8Fq2aJiVftw2ffEnFoWpNX59CRyxBy",
   "metadata": {
     "name": "soundhaven",
     "version": "0.1.0",
@@ -9,7 +9,16 @@
   "instructions": [
     {
       "name": "accept_payment",
-      "discriminator": [16, 43, 253, 85, 86, 15, 24, 181],
+      "discriminator": [
+        16,
+        43,
+        253,
+        85,
+        86,
+        15,
+        24,
+        181
+      ],
       "accounts": [
         {
           "name": "payment",
@@ -18,7 +27,13 @@
             "seeds": [
               {
                 "kind": "const",
-                "value": [112, 97, 121, 101, 114]
+                "value": [
+                  112,
+                  97,
+                  121,
+                  101,
+                  114
+                ]
               },
               {
                 "kind": "account",
@@ -52,7 +67,16 @@
     },
     {
       "name": "create_song",
-      "discriminator": [127, 207, 208, 177, 26, 61, 248, 164],
+      "discriminator": [
+        127,
+        207,
+        208,
+        177,
+        26,
+        61,
+        248,
+        164
+      ],
       "accounts": [
         {
           "name": "song",
@@ -61,11 +85,21 @@
             "seeds": [
               {
                 "kind": "const",
-                "value": [115, 111, 110, 103]
+                "value": [
+                  115,
+                  111,
+                  110,
+                  103
+                ]
               },
               {
                 "kind": "account",
                 "path": "signer"
+              },
+              {
+                "kind": "account",
+                "path": "user.song_count",
+                "account": "User"
               }
             ]
           }
@@ -77,7 +111,12 @@
             "seeds": [
               {
                 "kind": "const",
-                "value": [117, 115, 101, 114]
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114
+                ]
               },
               {
                 "kind": "account",
@@ -109,11 +148,41 @@
     },
     {
       "name": "delete_song",
-      "discriminator": [146, 88, 254, 164, 193, 81, 122, 206],
+      "discriminator": [
+        146,
+        88,
+        254,
+        164,
+        193,
+        81,
+        122,
+        206
+      ],
       "accounts": [
         {
           "name": "song",
           "writable": true
+        },
+        {
+          "name": "user",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "signer"
+              }
+            ]
+          }
         },
         {
           "name": "signer",
@@ -129,7 +198,16 @@
     },
     {
       "name": "delete_user",
-      "discriminator": [186, 85, 17, 249, 219, 231, 98, 251],
+      "discriminator": [
+        186,
+        85,
+        17,
+        249,
+        219,
+        231,
+        98,
+        251
+      ],
       "accounts": [
         {
           "name": "user",
@@ -149,7 +227,16 @@
     },
     {
       "name": "initialize_user",
-      "discriminator": [111, 17, 185, 250, 60, 122, 38, 254],
+      "discriminator": [
+        111,
+        17,
+        185,
+        250,
+        60,
+        122,
+        38,
+        254
+      ],
       "accounts": [
         {
           "name": "user",
@@ -158,7 +245,12 @@
             "seeds": [
               {
                 "kind": "const",
-                "value": [117, 115, 101, 114]
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114
+                ]
               },
               {
                 "kind": "account",
@@ -200,15 +292,42 @@
   "accounts": [
     {
       "name": "Payment",
-      "discriminator": [227, 231, 51, 26, 244, 88, 4, 148]
+      "discriminator": [
+        227,
+        231,
+        51,
+        26,
+        244,
+        88,
+        4,
+        148
+      ]
     },
     {
       "name": "Song",
-      "discriminator": [144, 84, 211, 50, 100, 5, 81, 24]
+      "discriminator": [
+        144,
+        84,
+        211,
+        50,
+        100,
+        5,
+        81,
+        24
+      ]
     },
     {
       "name": "User",
-      "discriminator": [159, 117, 95, 227, 239, 151, 58, 236]
+      "discriminator": [
+        159,
+        117,
+        95,
+        227,
+        239,
+        151,
+        58,
+        236
+      ]
     }
   ],
   "errors": [

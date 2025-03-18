@@ -2,6 +2,7 @@ import { clusterApiUrl, Connection, PublicKey } from "@solana/web3.js";
 import { Program, web3 } from "@coral-xyz/anchor";
 import type { Soundhaven } from "./soundhaven.types";
 import soundhaven from "./soundhaven.json";
+import { tSongs } from "@/app.types";
 
 export const connection = new Connection(clusterApiUrl("devnet"), "confirmed");
 
@@ -49,12 +50,19 @@ export const createSong = async (
   songTitle: string,
   songUrl: string
 ) => {
-  const [songPda] = web3.PublicKey.findProgramAddressSync(
-    [Buffer.from("song"), user.toBuffer()],
-    program.programId
-  );
   const [userPda] = web3.PublicKey.findProgramAddressSync(
     [Buffer.from("user"), user.toBuffer()],
+    program.programId
+  );
+
+  const userDetails = await program.account.user.fetch(userPda);
+
+  const [songPda] = web3.PublicKey.findProgramAddressSync(
+    [
+      Buffer.from("song"),
+      user.toBuffer(),
+      Buffer.from([userDetails.songCount]),
+    ],
     program.programId
   );
 
@@ -72,13 +80,12 @@ export const createSong = async (
 };
 
 export const fetchAllSongs = async () => {
-  console.log("fetching 1");
-  await program.account.song
-    .all()
-    .then((res) => {
-      return res;
-    })
-    .catch((err) => console.log(err));
-
-  console.log("fetching 2");
+  try {
+    const res = await program.account.song.all();
+    console.log(res);
+    return res;
+  } catch (err) {
+    console.log(err);
+    return [];
+  }
 };
